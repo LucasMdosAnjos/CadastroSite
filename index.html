@@ -1,0 +1,157 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>Entrega</title>
+	<style>
+		form{  
+    margin: 0 auto;
+    width: 446px;
+    padding: 1em;
+    border: 2px solid #CCC;
+    border-radius: 1em;
+}
+form div + div {
+    margin-top: 1em;
+}
+label {
+	font-size: 12pt;
+    display: inline-block;
+    width: 90px;
+    text-align: right;
+}
+.group {
+  margin-bottom: 20px;
+}
+.group label {
+  font-size: 14pt;
+}
+
+.button {
+    padding-left: 90px; 
+}
+button {
+    margin-left: .5em;
+}
+input[type=text] {
+    font: 1em sans-serif;
+
+    width: 300px;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+    border: 1px solid #999;
+}
+input[type=email], textarea {
+    font: 1em sans-serif;
+
+    width: 300px;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+    border: 1px solid #999;
+}
+input:focus, textarea:focus {
+    border-color: #000;
+}
+	</style>
+	<script type="text/javascript">
+/* Máscaras ER */
+function mascara(o,f){
+    v_obj=o
+    v_fun=f
+    setTimeout("execmascara()",1)
+}
+function execmascara(){
+    v_obj.value=v_fun(v_obj.value)
+}
+function mtel(v){
+    v=v.replace(/\D/g,"");             
+    v=v.replace(/^(\d{2})(\d)/g,"($1) $2");
+    v=v.replace(/(\d)(\d{4})$/,"$1-$2");    
+    return v;
+}
+function id( el ){
+	return document.getElementById( el );
+}
+window.onload = function(){
+	id('telefone').onkeypress = function(){
+		mascara( this, mtel );
+	}
+}
+</script>
+
+</head>
+<body>
+<form enctype="multipart/form-data" action="main.php" method="post">
+	<p>
+		<font size="3" face="Arial" color="grey">
+			<strong>DADOS PARA ENTREGA </strong>
+		</font>
+		</p>
+	<div class="group label">
+		<label for="nome">Nome:</label>
+		<input type="text" name="nome">
+	</div>
+	<div class="group label">
+		<label for="endereco">Endereço:</label>
+		<input type="text" name="endereco">
+	</div>
+	<div class="group label">
+		<label for="bairro">Bairro:</label>
+		<input type="text" name="bairro">		
+	</div>
+	<div class="group label">
+		<label for="cep">Cep:</label>
+		<input type="text" name="cep">
+	</div>
+	<div class="group label">
+		<label for="cidade">Cidade:</label>
+		<input type="text" name="cidade">
+	</div>
+	<div class="group label">
+		<label for="uf">UF:</label>
+		<input type="text" name="uf">
+	</div>
+	<div class="group label">
+		<label for="email">E-mail:</label>
+		<input type="email" name="email" placeholder="example@example.com">
+	</div>
+	<div class="group label">
+		<label for="telefone">Telefone:</label>
+		<input type="text" name="telefone" id="telefone" maxlength="15" placeholder="Ex: (00) 00000-0000">
+	</div>
+	<br>
+	<p>
+		<font size="3" face="Arial" color="grey">
+			<strong>DADOS PARA PRODUÇÃO </strong>
+		</font>
+		</p>
+	</br>
+	<div class="group label">
+		Tipo de revistinha:
+		<input type="radio" name="tipo_de_revistinha" value="convite">Convite
+		<input type="radio" name="tipo_de_revistinha" value="lembranca">Lembrança
+		<input type="radio" name="tipo_de_revistinha" value="convite_lembranca">Convite-Lembrança
+	</div>
+	<div class="group label">
+		<label for="quantidade">Quantidade:</label>
+		<input type="textarea" name="quantidade">
+	</div>
+	<div class="group label">
+		<label for="atracoes">Atrações do evento:</label>
+		<textarea name="atracoes"></textarea>
+	</div>
+	<div class="group label">
+		<input type="checkbox" name="sugestao">Aceito sugestões de texto para a capa
+	</div>
+	<input type="hidden" name="MAX_FILE_SIZE" value="9999999">
+	<div class="group label">
+		<input type="file" name="image">
+	</div>
+	<div>
+		<button type="submit">Send</button>
+	</div>
+
+</form>
+</body>
+</html>
