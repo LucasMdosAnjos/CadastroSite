@@ -17,6 +17,7 @@ class Usuario
 	private $sugestao;
 	private $image;
 	private $file;
+	private $campo;
 
 	public function setIdUsuario($id)
 	{
@@ -38,7 +39,7 @@ class Usuario
 	{
 		$this->endereco = $endereco;
 	}
-	public function getEndereco():string
+	public function getEndereco()
 	{
 		return $this->endereco;
 	}
@@ -139,7 +140,14 @@ class Usuario
 	{
 		return $this->file;
 	}
-
+	private function setCampo($campo)
+	{
+		$this->campo = $campo;
+	}
+	private function getCampo()
+	{
+		return $this->campo;
+	}
 
 	
 	public function loadById($id)
@@ -157,7 +165,7 @@ class Usuario
 		$sql = new Sql();
 		return $sql->select("SELECT idusuario, desnome,destelefone FROM tb_info ORDER BY idusuario");
 	}
-	public static function search($nome) //Primeira maneira
+	public static function search($nome) 
 	{
 		$sql = new Sql();
 		return $sql->select("SELECT *FROM tb_usuarios WHERE desnome = :NOME",array(":NOME"=>$nome));
@@ -170,9 +178,10 @@ class Usuario
 			$this->setBairro($data['desbairro']);
 			$this->setCep($data['descep']);
 			$this->setCidade($data['descidade']);
-			$this->setUf($data['desendereco']);
-			$this->setEmail($data['desendereco']);
-			$this->setTelefone($data['desendereco']);
+			$this->setEndereco($data['desendereco']);
+			$this->setEmail($data['desemail']);
+			$this->setUf($data['desuf']);
+			$this->setTelefone($data['destelefone']);
 			$this->setTipoRevistinha($data['destiporevistinha']);
 			$this->setQuantidade($data['desquantidade']);
 			$this->setAtracoes($data['desatracao']);
@@ -181,7 +190,7 @@ class Usuario
 	}
 	
 
-	public function insert()//Primeira maneira
+	public function insert()
 	{
 		$sql = new Sql();
 		if($this->getFile()!=NULL)
@@ -210,6 +219,15 @@ class Usuario
 		}
 	}
 }
+public function update($id,$campo,$value)
+	{
+		$sql = new Sql();
+		$this->setCampo($campo);
+		$sql->query("UPDATE tb_info SET ".$this->getCampo()." = :VALUE WHERE idusuario = :ID",array(
+			":VALUE"=>$value,
+			":ID"=>$id
+		));
+	}
 
 	public function __toString()
 	{
@@ -226,7 +244,6 @@ class Usuario
 			'Lista de Atrações'=>$this->getAtracoes(),
 			'Sugestão'=>$this->getSugestao(),
 			'Cidade'=>$this->getCidade()));
-
 	}
 }
 ?>

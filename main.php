@@ -29,6 +29,9 @@ if($_POST["email"]=="" ||$_POST["telefone"]=="" ||$_POST["nome"]=="")
 	$user->setAtracoes($_POST['atracoes']);
 	$user->setSugestao($_POST['sugestao']);
 	$user->insert();
+	$file = fopen("idUsuario.txt","w+");
+	$lista = Usuario::getList();
+	fwrite($file,$lista[count($lista)-1]["idusuario"]);
 	$result = array();
 	$result = EnviarEmail();
 	for($i=0;$i<count($result);$i++)
@@ -47,9 +50,14 @@ function EnviarEmail():array
 	$tipo = $_POST['tipo_de_revistinha'];
 	$quantidade = $_POST['quantidade'];
 	$enviaremail = array();
+	try{
 $enviaremail[0] = mail($_POST['email'], "Cadastro Confirmado", "Você concluiu seu cadastro de dados para entrega e produção! Agora é só esperar seu(sua) $tipo chegar na quantidade de $quantidade peças!");
+}catch(Exception $e)
+{
+	echo $e;
+}
 $enviaremail[1] = mail("davi@signoweb.com.br", "Cadastro Confirmado", "Você concluiu seu cadastro de dados para entrega e produção! Agora é só esperar seu(sua) $tipo chegar!");
 return $enviaremail;
 }
 ?>
-<a href=\teste_estagio\project\listagem.php\>Ver lista de cadastros</a>
+<a href=\CadastroSite\listagem.php\>Ver lista de cadastros</a>
